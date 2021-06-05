@@ -19,6 +19,14 @@ module.exports = {
         path: path.resolve(__dirname, "public"),
         filename: "[name].[chunkhash].js",
     },
+
+    // Personalizar el tamaño de la app
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    },
+
     // mode: 'development',
     devtool: 'source-map',
     devServer: {
@@ -48,6 +56,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
+                // ,"image-webpack-loader"  Activar solamente para pasar a Produccion..
                 use: [
                     {
                         loader: 'file-loader',
@@ -58,6 +67,10 @@ module.exports = {
                             // publicPath: 'assets',
                         }
                     },
+                    {
+                        // Minificando imagenes // ,"image-webpack-loader"  Activar solamente para pasar a Produccion..
+                        loader: 'image-webpack-loader',
+                    }
                 ]
             },
             {
@@ -78,6 +91,22 @@ module.exports = {
             // title: "Webpack Por DavidSalinas",
             template: "./src/index.html",
             filename: "./index.html",
+            chunks: ["app"],
+            hash: true,
+            inject: "body"
+        }),
+        new HtmlWebpackPlugin({
+            // title: "Webpack Por DavidSalinas",
+            template: "./src/nosotros.html",
+            filename: "./nosotros.html",
+            chunks: ["app"],
+            hash: true,
+            inject: "body"
+        }),
+        new HtmlWebpackPlugin({
+            // title: "Webpack Por DavidSalinas",
+            template: "./src/productos.html",
+            filename: "./productos.html",
             chunks: ["app"],
             hash: true,
             inject: "body"
